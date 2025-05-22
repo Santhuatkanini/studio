@@ -28,7 +28,7 @@ const SuggestFineTuningParametersInputSchema = z.object({
   modelType: z
     .string()
     .describe(
-      'The type of base LLM to be fine-tuned (e.g., GPT-3, BERT, custom model).'n
+      'The type of base LLM to be fine-tuned (e.g., GPT-3, BERT, custom model).'
     ),
 });
 
