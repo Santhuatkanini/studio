@@ -1,5 +1,6 @@
+
 import type { Metadata } from 'next';
-import { GeistSans } from 'next/font/google'; // Corrected import
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import {
@@ -15,8 +16,8 @@ import {
 import NavLink from '@/components/nav-link';
 import { LayoutDashboard, DatabaseZap, Cog, TrendingUp, BrainCircuit } from 'lucide-react';
 
-const geistSans = GeistSans({ // Corrected variable name
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-sans', // CSS variable name, used in globals.css
   subsets: ['latin'],
 });
 
@@ -31,8 +32,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${geistSans.variable} antialiased`}>
+    // Apply the font variable class to the <html> tag.
+    // This makes the CSS variable --font-sans available.
+    // next/font also injects a style tag defining this on html by default.
+    <html lang="en" className={`${inter.variable} dark`}>
+      {/* The font-family is applied via globals.css using var(--font-sans) */}
+      <body className="antialiased">
         <SidebarProvider defaultOpen={true}>
           <Sidebar collapsible="icon" variant="sidebar" side="left">
             <SidebarHeader className="flex items-center justify-between p-2">
