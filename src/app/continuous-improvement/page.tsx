@@ -1,10 +1,25 @@
+
 'use client';
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
-import { Bar, Line, PieChart as RechartsPieChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend as RechartsLegend, Cell, BarChart as RechartsBarChart, LineChart as RechartsLineChart } from "recharts";
+import {
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  Legend as RechartsLegend,
+  Cell,
+  LineChart as RechartsLineChart,
+  BarChart as RechartsBarChart,
+  PieChart as RechartsPieChart,
+  Line as RechartsLineElement,
+  Pie as RechartsPieElement,
+  Bar as RechartsBarElement
+} from "recharts";
 import { RefreshCw, ThumbsUp, ThumbsDown, MessageSquareWarning, PlusCircle } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -56,7 +71,7 @@ export default function ContinuousImprovementPage() {
                   <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
                   <YAxis domain={[0,100]} tickLine={false} axisLine={false} tickMargin={8} />
                   <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                  <Line type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" strokeWidth={2} dot={true} />
+                  <RechartsLineElement type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" strokeWidth={2} dot={true} />
                 </RechartsLineChart>
               </ResponsiveContainer>
             </ChartContainer>
@@ -72,7 +87,7 @@ export default function ContinuousImprovementPage() {
               <ResponsiveContainer width="100%" height="100%">
                 <RechartsPieChart margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
                   <RechartsTooltip formatter={(value: number, name: string) => [`${value} (${((value / chartDataFeedback.reduce((acc, curr) => acc + curr.value, 0)) * 100).toFixed(1)}%)`, name]} />
-                  <RechartsPrimitive.Pie data={chartDataFeedback} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} labelLine={false}
+                  <RechartsPieElement data={chartDataFeedback} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} labelLine={false}
                        label={({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
                           const RADIAN = Math.PI / 180;
                           const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -88,9 +103,9 @@ export default function ContinuousImprovementPage() {
                      {chartDataFeedback.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.fill} />
                       ))}
-                  </RechartsPrimitive.Pie>
+                  </RechartsPieElement>
                   <RechartsLegend
-                    formatter={(value, entry) => <span style={{ color: entry.color }}>{value}</span>}
+                    formatter={(value, entry) => <span style={{ color: (entry as any).color }}>{value}</span>}
                   />
                 </RechartsPieChart>
               </ResponsiveContainer>
@@ -112,7 +127,7 @@ export default function ContinuousImprovementPage() {
                 <XAxis type="number" tickLine={false} axisLine={false} />
                 <YAxis dataKey="intent" type="category" tickLine={false} axisLine={false} width={120} />
                 <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                <Bar dataKey="count" fill="var(--color-count)" radius={4} layout="vertical" barSize={20} />
+                <RechartsBarElement dataKey="count" fill="var(--color-count)" radius={4} layout="vertical" barSize={20} />
               </RechartsBarChart>
             </ResponsiveContainer>
           </ChartContainer>
@@ -188,10 +203,3 @@ export default function ContinuousImprovementPage() {
     </div>
   );
 }
-
-// Needed to alias Pie from recharts to avoid conflict with a potential local component.
-// Also, recharts components often need to be imported under an alias if their names clash with HTML elements or other components.
-// For instance, Bar, Line, Pie are common names.
-// Using RechartsPrimitive.LineChart, RechartsPrimitive.BarChart, RechartsPrimitive.Pie as an example.
-// For this case, the conflict seems to be more about server vs client rendering.
-import * as RechartsPrimitive from 'recharts';

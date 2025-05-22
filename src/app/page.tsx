@@ -1,9 +1,21 @@
+
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, Database, Zap, Users, BarChartIcon, LineChartIcon, Search } from "lucide-react"; // Changed BarChart, LineChart to avoid conflict
+import { DollarSign, Database, Zap, Users, BarChartIcon, LineChartIcon, Search } from "lucide-react";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
-import { Bar, Line, Pie, PieChart as RechartsPieChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend as RechartsLegend } from "recharts";
+import {
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  Legend as RechartsLegend,
+  LineChart as RechartsLineChart,
+  BarChart as RechartsBarChart,
+  Line as RechartsLineElement,
+  Bar as RechartsBarElement,
+} from "recharts";
 import DataAnalysisForm from "@/components/data-analysis-form";
 
 const chartDataIngestion = [
@@ -87,13 +99,13 @@ export default function DashboardPage() {
           <CardContent>
             <ChartContainer config={chartConfigIngestion} className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <RechartsPrimitive.LineChart data={chartDataIngestion} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                <RechartsLineChart data={chartDataIngestion} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
                   <YAxis tickLine={false} axisLine={false} tickMargin={8} />
                   <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                  <Line type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={true} />
-                </RechartsPrimitive.LineChart>
+                  <RechartsLineElement type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={true} />
+                </RechartsLineChart>
               </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
@@ -106,15 +118,15 @@ export default function DashboardPage() {
           <CardContent>
             <ChartContainer config={chartConfigPerformance} className="h-[300px] w-full">
                <ResponsiveContainer width="100%" height="100%">
-                <RechartsPrimitive.BarChart data={chartModelPerformance} margin={{ top: 5, right: 20, bottom: 5, left: -10 }}>
+                <RechartsBarChart data={chartModelPerformance} margin={{ top: 5, right: 20, bottom: 5, left: -10 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8}/>
                   <YAxis tickLine={false} axisLine={false} tickMargin={8}/>
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <ChartLegend content={<ChartLegendContent />} />
-                  <Bar dataKey="accuracy" fill="var(--color-accuracy)" radius={4} />
-                  <Bar dataKey="precision" fill="var(--color-precision)" radius={4} />
-                </RechartsPrimitive.BarChart>
+                  <RechartsBarElement dataKey="accuracy" fill="var(--color-accuracy)" radius={4} />
+                  <RechartsBarElement dataKey="precision" fill="var(--color-precision)" radius={4} />
+                </RechartsBarChart>
               </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
