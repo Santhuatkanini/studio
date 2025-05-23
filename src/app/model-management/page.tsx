@@ -23,6 +23,15 @@ import {
   LineChart as RechartsLineChart,
   Line as RechartsLineElement,
 } from "recharts";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import NewFineTuningJobForm, { type NewFineTuningJobFormData } from "@/components/new-fine-tuning-job-form";
+
 
 const sampleFineTuningJobs = [
   { id: "ftj_abc123", name: "mini-instruct-Finetune-ABC", baseModel: "Llama 3 8B", dataset: "Customer Support Q1", status: "Running", progress: 75, created: "2024-07-18 10:00" },
@@ -101,13 +110,27 @@ const metricCardsData = [
 export default function ModelManagementPage() {
   const { toast } = useToast();
   const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
+  const [isNewJobDialogOpen, setIsNewJobDialogOpen] = useState(false);
+  const [currentNewJobId, setCurrentNewJobId] = useState('');
 
-  const handleStartNewJob = () => {
+  const generateNewJobId = () => `ftj_${Date.now()}`;
+
+  const handleStartNewJobClick = () => {
+    setCurrentNewJobId(generateNewJobId());
+    setIsNewJobDialogOpen(true);
+  };
+
+  const handleNewJobFormSubmit = (data: NewFineTuningJobFormData) => {
+    // In a real app, you might add this to the sampleFineTuningJobs list or send to a backend
+    // For now, we just show a toast and close the dialog.
+    console.log("New job submitted:", data);
+    setIsNewJobDialogOpen(false); // Close the dialog
     toast({
       title: "Fine-Tuning Job Submitted",
-      description: "Your new fine-tuning job has been successfully submitted and will begin shortly. You can monitor its progress in the table below.",
+      description: `Job ID ${data.jobId} for model '${data.baseModel}' with dataset '${data.dataset}' has been successfully submitted.`,
     });
   };
+
 
   const toggleJobExpansion = (jobId: string) => {
     setExpandedJobId(prevId => prevId === jobId ? null : jobId);
@@ -141,7 +164,7 @@ export default function ModelManagementPage() {
                  <CardTitle className="flex items-center gap-2"><ListChecks className="h-6 w-6 text-primary" />Fine-Tuning Jobs</CardTitle>
                   <CardDescription>Monitor and manage your model fine-tuning processes.</CardDescription>
                 </div>
-                <Button onClick={handleStartNewJob}> 
+                <Button onClick={handleStartNewJobClick}> 
                   <PlayCircle className="mr-2 h-4 w-4" /> Start New Job
                 </Button>
               </div>
@@ -554,6 +577,23 @@ export default function ModelManagementPage() {
           </Card>
         </TabsContent>
       </Tabs>
+      <Dialog open={isNewJobDialogOpen} onOpenChange={setIsNewJobDialogOpen}>
+        <DialogContent className="sm:max-w-[480px]">
+          <DialogHeader>
+            <DialogTitle>Start New Fine-Tuning Job</DialogTitle>
+            <DialogDescription>
+              Configure and submit a new fine-tuning job. Select the base model and dataset.
+            </DialogDescription>
+          </DialogHeader>
+          {/* Conditionally render the form or ensure it receives the updated defaultJobId if it's always mounted */}
+          {isNewJobDialogOpen && (
+            <NewFineTuningJobForm
+              defaultJobId={currentNewJobId}
+              onSubmitSuccess={handleNewJobFormSubmit}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
