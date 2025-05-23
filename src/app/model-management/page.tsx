@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,7 +12,8 @@ const sampleFineTuningJobs = [
   { id: "ftj_abc123", baseModel: "Llama 3 8B", dataset: "Customer Support Q1", status: "Running", progress: 75, created: "2024-07-18 10:00" },
   { id: "ftj_def456", baseModel: "Mistral 7B", dataset: "KB Articles v2", status: "Completed", progress: 100, created: "2024-07-15 14:30" },
   { id: "ftj_ghi789", baseModel: "GPT-Neo 2.7B", dataset: "Product Descriptions", status: "Failed", progress: 20, created: "2024-07-19 09:15" },
-  { id: "ftj_jkl012", baseModel: "Llama 3 8B", dataset: "Social Media Sentiment", status: "Queued", progress: 0, created: "2024-07-19 11:00" },
+  { id: "ftj_jkl012", baseModel: "Llama 3 8B", dataset: "Electrification", status: "Queued", progress: 0, created: "2024-07-19 11:00" },
+  { id: "ftj_mno345", baseModel: "Mistral 7B", dataset: "Flow Control", status: "Completed", progress: 100, created: "2024-07-20 12:00" },
 ];
 
 const sampleDeployedModels = [
@@ -196,3 +198,4 @@ export default function ModelManagementPage() {
     </div>
   );
 }
+
