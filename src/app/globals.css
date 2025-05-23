@@ -34,52 +34,33 @@ body {
     --chart-5: 27 87% 67%; /* Orangish */
     --radius: 0.5rem;
 
-    /* Sidebar specific variables - Light Theme */
-    --sidebar-background: 220 25% 98%; /* Slightly off-white, lighter than main bg */
-    --sidebar-foreground: 222 47% 15%; /* Dark text */
-    --sidebar-primary: 231 48% 48%; /* Deep Blue */
-    --sidebar-primary-foreground: 0 0% 98%; /* Light text on primary */
-    --sidebar-accent: 220 20% 92%; /* Lighter accent for hover states in sidebar */
-    --sidebar-accent-foreground: 231 48% 48%; /* Primary color for text on sidebar accent */
-    --sidebar-border: 220 15% 88%;
-    --sidebar-ring: 231 48% 48%;
   }
 
   .dark {
-    --background: 222 47% 11%; /* Dark Desaturated Blue */
-    --foreground: 210 40% 96%; /* Light Gray for text */
-    --card: 222 47% 14%; /* Slightly Lighter Dark Blue */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 14%;
     --card-foreground: 210 40% 96%;
     --popover: 222 47% 14%;
     --popover-foreground: 210 40% 96%;
-    --primary: 231 48% 58%; /* Lighter Deep Blue for dark mode */
-    --primary-foreground: 0 0% 98%; 
+    --primary: 231 48% 58%;
+    --primary-foreground: 0 0% 98%;
     --secondary: 222 47% 18%;
     --secondary-foreground: 210 40% 96%;
     --muted: 222 47% 18%;
     --muted-foreground: 215 20% 65%;
-    --accent: 263 44% 68%; /* Lighter Vibrant Purple for dark mode */
+    --accent: 263 44% 68%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 217 33% 25%;
     --input: 217 33% 25%;
-    --ring: 231 48% 58%; /* Lighter primary for rings */
+    --ring: 231 48% 58%;
     --chart-1: 231 48% 58%;
     --chart-2: 263 44% 68%;
     --chart-3: 197 37% 54%;
     --chart-4: 43 74% 76%;
     --chart-5: 27 87% 77%;
-
-    /* Sidebar specific variables - Dark Theme */
-    --sidebar-background: 222 47% 9%; /* Darker than main dark bg */
-    --sidebar-foreground: 210 40% 92%; /* Light text */
-    --sidebar-primary: 231 48% 58%; /* Lighter Deep Blue */
-    --sidebar-primary-foreground: 0 0% 98%; /* Light text on primary */
-    --sidebar-accent: 222 47% 15%; /* Darker accent for hover states */
-    --sidebar-accent-foreground: 210 40% 98%; /* Light text on sidebar accent */
-    --sidebar-border: 217 33% 20%;
-    --sidebar-ring: 231 48% 58%;
   }
 }
 
