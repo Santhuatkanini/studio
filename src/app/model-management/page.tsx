@@ -51,6 +51,27 @@ const epochData = [
   { step: 120, value: 7 }, { step: 140, value: 8 }, { step: 160, value: 9 }, { step: 170, value: 10 }
 ];
 
+const evalLossData = [
+  { step: 0, value: 0.98 }, { step: 20, value: 0.92 }, { step: 40, value: 0.88 }, { step: 60, value: 0.85 },
+  { step: 80, value: 0.855 }, { step: 100, value: 0.86 }, { step: 120, value: 0.87 }, { step: 140, value: 0.89 }, { step: 160, value: 0.93 },
+];
+
+const evalRuntimeData = [
+  { step: 0, value: 1.375 }, { step: 20, value: 1.400 }, { step: 40, value: 1.390 }, { step: 60, value: 1.450 },
+  { step: 80, value: 1.410 }, { step: 100, value: 1.405 }, { step: 120, value: 1.430 }, { step: 140, value: 1.360 }, { step: 160, value: 1.415 },
+];
+
+const evalSamplesPerSecondData = [
+  { step: 0, value: 47.0 }, { step: 20, value: 46.5 }, { step: 40, value: 45.2 }, { step: 60, value: 46.3 },
+  { step: 80, value: 46.0 }, { step: 100, value: 45.8 }, { step: 120, value: 47.5 }, { step: 140, value: 46.1 }, { step: 160, value: 45.5 },
+];
+
+const evalStepsPerSecondData = [
+  { step: 0, value: 3.60 }, { step: 20, value: 3.55 }, { step: 40, value: 3.48 }, { step: 60, value: 3.50 },
+  { step: 80, value: 3.58 }, { step: 100, value: 3.45 }, { step: 120, value: 3.62 }, { step: 140, value: 3.52 }, { step: 160, value: 3.49 },
+];
+
+
 const chartConfigJobMetrics = {
   value: { label: "Value", color: "hsl(var(--chart-1))" },
   step: { label: "Step", color: "hsl(var(--chart-2))" }, // Added for clarity if needed
@@ -261,6 +282,102 @@ export default function ModelManagementPage() {
                                                 <YAxis dataKey="value" name="Epoch" tickLine={false} axisLine={false} tickMargin={8} domain={[0, 'dataMax + 1']} />
                                                 <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
                                                 <RechartsLineElement type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={false} name="epoch" />
+                                              </RechartsLineChart>
+                                            </ResponsiveContainer>
+                                          </ChartContainer>
+                                        </CardContent>
+                                      </Card>
+                                       <Card>
+                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                          <CardTitle className="text-sm font-semibold">eval_loss</CardTitle>
+                                           <div className="flex items-center gap-1">
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Download className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Pencil className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Maximize2 className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><MoreHorizontal className="h-4 w-4" /></Button>
+                                          </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                          <ChartContainer config={chartConfigJobMetrics} className="h-[250px] w-full">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                              <RechartsLineChart data={evalLossData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                                <XAxis dataKey="step" name="Step" tickLine={false} axisLine={false} tickMargin={8} />
+                                                <YAxis dataKey="value" name="Eval Loss" tickLine={false} axisLine={false} tickMargin={8} domain={['dataMin - 0.02', 'dataMax + 0.02']} />
+                                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                                <RechartsLineElement type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={false} name="eval_loss" />
+                                              </RechartsLineChart>
+                                            </ResponsiveContainer>
+                                          </ChartContainer>
+                                        </CardContent>
+                                      </Card>
+                                      <Card>
+                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                          <CardTitle className="text-sm font-semibold">eval_runtime</CardTitle>
+                                           <div className="flex items-center gap-1">
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Download className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Pencil className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Maximize2 className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><MoreHorizontal className="h-4 w-4" /></Button>
+                                          </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                          <ChartContainer config={chartConfigJobMetrics} className="h-[250px] w-full">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                              <RechartsLineChart data={evalRuntimeData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                                <XAxis dataKey="step" name="Step" tickLine={false} axisLine={false} tickMargin={8} />
+                                                <YAxis dataKey="value" name="Eval Runtime" tickLine={false} axisLine={false} tickMargin={8} domain={['dataMin - 0.02', 'dataMax + 0.02']} />
+                                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                                <RechartsLineElement type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={false} name="eval_runtime" />
+                                              </RechartsLineChart>
+                                            </ResponsiveContainer>
+                                          </ChartContainer>
+                                        </CardContent>
+                                      </Card>
+                                      <Card>
+                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                          <CardTitle className="text-sm font-semibold">eval_samples_per_second</CardTitle>
+                                           <div className="flex items-center gap-1">
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Download className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Pencil className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Maximize2 className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><MoreHorizontal className="h-4 w-4" /></Button>
+                                          </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                          <ChartContainer config={chartConfigJobMetrics} className="h-[250px] w-full">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                              <RechartsLineChart data={evalSamplesPerSecondData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                                <XAxis dataKey="step" name="Step" tickLine={false} axisLine={false} tickMargin={8} />
+                                                <YAxis dataKey="value" name="Eval Samples/Sec" tickLine={false} axisLine={false} tickMargin={8} domain={['dataMin - 1', 'dataMax + 1']} />
+                                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                                <RechartsLineElement type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={false} name="eval_samples_per_second" />
+                                              </RechartsLineChart>
+                                            </ResponsiveContainer>
+                                          </ChartContainer>
+                                        </CardContent>
+                                      </Card>
+                                      <Card>
+                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                          <CardTitle className="text-sm font-semibold">eval_steps_per_second</CardTitle>
+                                           <div className="flex items-center gap-1">
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Download className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Pencil className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Maximize2 className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><MoreHorizontal className="h-4 w-4" /></Button>
+                                          </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                          <ChartContainer config={chartConfigJobMetrics} className="h-[250px] w-full">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                              <RechartsLineChart data={evalStepsPerSecondData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                                <XAxis dataKey="step" name="Step" tickLine={false} axisLine={false} tickMargin={8} />
+                                                <YAxis dataKey="value" name="Eval Steps/Sec" tickLine={false} axisLine={false} tickMargin={8} domain={['dataMin - 0.1', 'dataMax + 0.1']} />
+                                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                                <RechartsLineElement type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={false} name="eval_steps_per_second" />
                                               </RechartsLineChart>
                                             </ResponsiveContainer>
                                           </ChartContainer>
