@@ -71,10 +71,22 @@ const evalStepsPerSecondData = [
   { step: 80, value: 3.58 }, { step: 100, value: 3.45 }, { step: 120, value: 3.62 }, { step: 140, value: 3.52 }, { step: 160, value: 3.49 },
 ];
 
+const powerConsumptionData = [
+  { step: 0, kwh: 0.5 }, { step: 20, kwh: 1.2 }, { step: 40, kwh: 2.0 }, { step: 60, kwh: 2.8 },
+  { step: 80, kwh: 3.5 }, { step: 100, kwh: 4.1 }, { step: 120, kwh: 4.8 }, { step: 140, kwh: 5.3 }, { step: 160, kwh: 6.0 },
+];
+
+const greenhouseGasesData = [
+  { step: 0, co2eq: 0.2 }, { step: 20, co2eq: 0.5 }, { step: 40, co2eq: 0.8 }, { step: 60, co2eq: 1.1 },
+  { step: 80, co2eq: 1.4 }, { step: 100, co2eq: 1.6 }, { step: 120, co2eq: 1.9 }, { step: 140, co2eq: 2.1 }, { step: 160, co2eq: 2.4 },
+];
+
 
 const chartConfigJobMetrics = {
   value: { label: "Value", color: "hsl(var(--chart-1))" },
-  step: { label: "Step", color: "hsl(var(--chart-2))" }, // Added for clarity if needed
+  step: { label: "Step", color: "hsl(var(--chart-2))" }, 
+  kwh: { label: "Power (kWh)", color: "hsl(var(--chart-3))" },
+  co2eq: { label: "GHG (kg CO₂eq)", color: "hsl(var(--chart-4))" },
 };
 
 const metricCardsData = [
@@ -378,6 +390,54 @@ export default function ModelManagementPage() {
                                                 <YAxis dataKey="value" name="Eval Steps/Sec" tickLine={false} axisLine={false} tickMargin={8} domain={['dataMin - 0.1', 'dataMax + 0.1']} />
                                                 <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
                                                 <RechartsLineElement type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={false} name="eval_steps_per_second" />
+                                              </RechartsLineChart>
+                                            </ResponsiveContainer>
+                                          </ChartContainer>
+                                        </CardContent>
+                                      </Card>
+                                      <Card>
+                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                          <CardTitle className="text-sm font-semibold">Power Consumed (kWh)</CardTitle>
+                                           <div className="flex items-center gap-1">
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Download className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Pencil className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Maximize2 className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><MoreHorizontal className="h-4 w-4" /></Button>
+                                          </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                          <ChartContainer config={chartConfigJobMetrics} className="h-[250px] w-full">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                              <RechartsLineChart data={powerConsumptionData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                                <XAxis dataKey="step" name="Step" tickLine={false} axisLine={false} tickMargin={8} />
+                                                <YAxis dataKey="kwh" name="Power (kWh)" tickLine={false} axisLine={false} tickMargin={8} domain={['dataMin - 0.5', 'dataMax + 0.5']} />
+                                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                                <RechartsLineElement type="monotone" dataKey="kwh" stroke="var(--color-kwh)" strokeWidth={2} dot={false} name="power_consumed_kwh" />
+                                              </RechartsLineChart>
+                                            </ResponsiveContainer>
+                                          </ChartContainer>
+                                        </CardContent>
+                                      </Card>
+                                      <Card>
+                                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                          <CardTitle className="text-sm font-semibold">Greenhouse Gases Emitted (kg CO₂eq)</CardTitle>
+                                           <div className="flex items-center gap-1">
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Download className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Pencil className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><Maximize2 className="h-4 w-4" /></Button>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7"><MoreHorizontal className="h-4 w-4" /></Button>
+                                          </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                          <ChartContainer config={chartConfigJobMetrics} className="h-[250px] w-full">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                              <RechartsLineChart data={greenhouseGasesData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                                <XAxis dataKey="step" name="Step" tickLine={false} axisLine={false} tickMargin={8} />
+                                                <YAxis dataKey="co2eq" name="GHG (kg CO₂eq)" tickLine={false} axisLine={false} tickMargin={8} domain={['dataMin - 0.2', 'dataMax + 0.2']} />
+                                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                                <RechartsLineElement type="monotone" dataKey="co2eq" stroke="var(--color-co2eq)" strokeWidth={2} dot={false} name="greenhouse_gases_co2eq" />
                                               </RechartsLineChart>
                                             </ResponsiveContainer>
                                           </ChartContainer>
