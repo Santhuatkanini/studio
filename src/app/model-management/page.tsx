@@ -186,13 +186,15 @@ export default function ModelManagementPage() {
                                   </TabsList>
 
                                   <TabsContent value="metrics">
-                                    <div className="flex items-center gap-2 mb-6">
-                                      <Button variant="outline" size="sm"><RefreshCw className="mr-2 h-3 w-3" />Refresh</Button>
-                                      {job.status === "Running" && <Button variant="outline" size="sm" className="text-destructive border-destructive hover:bg-destructive/10"><X className="mr-2 h-3 w-3" />Cancel</Button>}
-                                      <div className="h-6 border-l mx-2"></div>
+                                    <div className="flex flex-wrap items-center gap-2 mb-6">
+                                      <div className="flex items-center gap-2">
+                                        <Button variant="outline" size="sm"><RefreshCw className="mr-2 h-3 w-3" />Refresh</Button>
+                                        {job.status === "Running" && <Button variant="outline" size="sm" className="text-destructive border-destructive hover:bg-destructive/10"><X className="mr-2 h-3 w-3" />Cancel</Button>}
+                                      </div>
+                                      <div className="h-6 border-l mx-2 hidden sm:block"></div>
                                       <Button variant="outline" size="sm"><AreaChart className="mr-2 h-3 w-3" />Create custom chart</Button>
                                       <Button variant="outline" size="sm" disabled>View as... <ChevronsUpDown className="ml-2 h-3 w-3" /></Button>
-                                      <div className="h-6 border-l mx-2"></div>
+                                      <div className="h-6 border-l mx-2 hidden sm:block"></div>
                                       <span className="text-sm text-muted-foreground mr-2">Current view:</span>
                                       <Button variant="outline" size="sm" disabled>Local <ChevronsUpDown className="ml-2 h-3 w-3" /></Button>
                                       <Button variant="outline" size="sm" disabled>Edit view</Button>
@@ -378,3 +380,4 @@ export default function ModelManagementPage() {
     </div>
   );
 }
+
