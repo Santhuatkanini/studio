@@ -1,4 +1,6 @@
 
+'use client';
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { PlayCircle, ExternalLink, CircleSlash, BrainCircuit, ListChecks, Lightbulb, Rocket, Eye } from "lucide-react";
 import FineTuningAssistantForm from "@/components/fine-tuning-assistant-form";
 import Image from "next/image";
+import { useToast } from "@/hooks/use-toast"; // Added import
 
 const sampleFineTuningJobs = [
   { id: "ftj_abc123", baseModel: "Llama 3 8B", dataset: "Customer Support Q1", status: "Running", progress: 75, created: "2024-07-18 10:00" },
@@ -24,6 +27,15 @@ const sampleDeployedModels = [
 
 
 export default function ModelManagementPage() {
+  const { toast } = useToast(); // Initialized useToast
+
+  const handleStartNewJob = () => {
+    toast({
+      title: "New Job Initiated",
+      description: "Functionality to start a new fine-tuning job is not yet implemented.",
+    });
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-bold tracking-tight">Model Management</h1>
@@ -43,7 +55,7 @@ export default function ModelManagementPage() {
                  <CardTitle className="flex items-center gap-2"><ListChecks className="h-6 w-6 text-primary" />Fine-Tuning Jobs</CardTitle>
                   <CardDescription>Monitor and manage your model fine-tuning processes.</CardDescription>
                 </div>
-                <Button>
+                <Button onClick={handleStartNewJob}> {/* Added onClick handler */}
                   <PlayCircle className="mr-2 h-4 w-4" /> Start New Job
                 </Button>
               </div>
@@ -198,4 +210,3 @@ export default function ModelManagementPage() {
     </div>
   );
 }
-
