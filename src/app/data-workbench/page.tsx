@@ -1,3 +1,7 @@
+
+'use client';
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -5,6 +9,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { UploadCloud, Edit, Trash2, Sparkles, FileText, Eye } from "lucide-react";
 import TrainingDataGeneratorForm from "@/components/training-data-generator-form";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import DatasetUploadDropzone from "@/components/dataset-upload-dropzone";
+import { useToast } from "@/hooks/use-toast";
 
 const sampleDatasets = [
   { id: "ds001", name: "Customer Support Tickets Q1", type: "CSV", status: "Annotated", lastModified: "2024-07-15", records: 1200 },
@@ -14,6 +27,24 @@ const sampleDatasets = [
 ];
 
 export default function DataWorkbenchPage() {
+  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleFilesUploaded = (files: File[]) => {
+    setIsUploadDialogOpen(false); 
+    // In a real app, you would initiate the upload process here.
+    // For now, we just show a toast.
+    const fileNames = files.map(f => f.name).join(', ');
+    toast({
+      title: "Dataset Upload Initiated",
+      description: `${files.length} file(s) submitted for processing: ${fileNames}.`,
+      duration: 5000,
+    });
+    // You might want to add the dataset to a list or refresh the existing list here
+    // For example, add a new entry to sampleDatasets with a "Processing" status
+  };
+
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-bold tracking-tight">Data Workbench</h1>
@@ -32,7 +63,7 @@ export default function DataWorkbenchPage() {
                   <CardTitle>Manage Datasets</CardTitle>
                   <CardDescription>Upload, view, and prepare your domain-specific data.</CardDescription>
                 </div>
-                <Button>
+                <Button onClick={() => setIsUploadDialogOpen(true)}>
                   <UploadCloud className="mr-2 h-4 w-4" /> Upload Dataset
                 </Button>
               </div>
@@ -111,6 +142,24 @@ export default function DataWorkbenchPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <Dialog open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Upload New Dataset</DialogTitle>
+            <DialogDescription>
+              Drag and drop your dataset files or click to select.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <DatasetUploadDropzone 
+              onFilesUploaded={handleFilesUploaded} 
+              acceptedFileTypes={['text/csv', 'application/json', 'application/x-jsonlines', '.jsonl', 'application/pdf', 'text/plain']}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+
