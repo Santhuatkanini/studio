@@ -34,7 +34,6 @@ export default function RootLayout({
   return (
     // Apply the font variable class to the <html> tag.
     // This makes the CSS variable --font-sans available.
-    // next/font also injects a style tag defining this on html by default.
     <html lang="en" className={`${inter.variable}`}>
       {/* The font-family is applied via globals.css using var(--font-sans) */}
       <body className="antialiased">
@@ -54,10 +53,10 @@ export default function RootLayout({
                     y="50%"
                     dominantBaseline="middle"
                     textAnchor="middle"
-                    fontFamily="Arial, sans-serif"
+                    fontFamily="var(--font-sans), Arial, sans-serif" /* Updated font-family */
                     fontSize="30"
                     fontWeight="bold"
-                    fill="hsl(var(--destructive))"
+                    fill="hsl(var(--destructive))" /* Red color using CSS variable */
                   >
                     ABB
                   </text>
